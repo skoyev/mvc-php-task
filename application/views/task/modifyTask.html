@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Task implementation App</title>
+<?php include_once( VIEW_COMMON_PATH . "common.html"); ?>
+</head>
+<body>
+  <div class="container">
+  <div id="row">
+    <?php include_once( VIEW_COMMON_PATH . "header.html"); ?>
+  </div>
+
+  <div id="row">
+    <div class="col-md-8">
+
+    <form action="index.php?p=task&a=updateTask&c=task" method="post">
+      <h3>View Task:</h3>
+
+      <input type="hidden" name="taskId" value="<?=$task->id ?>"/>
+
+      <div class="form-group">
+        <label for="formControlInput1">User Name</label>
+        <input name="userName" type="text" class="form-control" value="<?=$task->user_name ?>" id="formControlInput1">
+      </div>
+
+      <div class="form-group">
+        <label for="formControlInput2">Email</label>
+        <input name="email" type="email" class="form-control" value="<?=$task->email ?>" id="formControlInput2">
+      </div>
+
+      <div class="form-group">
+        <label for="formControlInput3">Task Details</label>
+        <textarea name="task-details" class="form-control" rows="5" cols="40" id="formControlInput3"><?=$task->task_details ?></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="formControlInput3">Status</label>
+        <input name="status" type="text" class="form-control" id="formControlInput3" value="<?=$task->status ?>">
+      </div>
+
+      <div id="row">
+        <input type="button" class="btn btn-primary" value="Cancel" onClick="document.location.href='index.php?p=home&a=home&c=home'" />
+        <button type="submit" class="btn btn-primary mb-2" style="margin-top:7px;">Save Task</button>
+      </div>
+    </form>
+
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+
+  <div id="row">
+    <?php include_once( VIEW_COMMON_PATH . "footer.html"); ?>
+  </div>
+</div>
+</body>
+</html>

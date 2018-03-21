@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Task implementation App</title>
+<?php include( VIEW_COMMON_PATH . "common.html"); ?>
+</head>
+<body>
+  <div class="container">
+    <!-- Content here -->
+    <div id="row">
+      <?php include( VIEW_COMMON_PATH . "header.html"); ?>
+    </div>
+
+    <div id="row">
+      <?php include( VIEW_PARTIAL_PATH . "tasks.html"); ?>
+    </div>
+
+    <div id="row">
+      <div class="col-sm">
+        <input type="button" class="btn btn-primary" value="Create Task" onClick="document.location.href='index.php?p=task&a=createTask&c=task'" />
+      </div>
+    </div>
+
+    <div id="row">
+      <?php include( VIEW_COMMON_PATH . "footer.html"); ?>
+    </div>
+  </div>
+</body>
+</html>

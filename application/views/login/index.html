@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Task implementation App</title>
+<?php include_once( VIEW_COMMON_PATH . "common.html"); ?>
+</head>
+<body>
+  <div class="container">
+
+  <div id="row">
+    <div id="row">
+      <div class="col-md-8">
+
+      <form action="index.php?p=login&a=loginTask&c=index" method="post">
+        <h3>User Login:</h3>
+
+        <div class="form-group">
+          <label for="formControlInput1">User Name</label>
+          <input name="userName" type="text" class="form-control" id="formControlInput1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="formControlInput2">Password</label>
+          <input name="password" type="text" class="form-control" id="formControlInput2" requitred>
+        </div>
+
+        <div id="row">
+          <input type="button" class="btn btn-primary" value="Public Access" onClick="document.location.href='index.php?p=home&a=home&c=home'" />
+          <button type="submit" class="btn btn-primary mb-2" style="margin-top:7px;">Login</button>
+        </div>
+      </form>
+
+      </div>
+      <div class="col-md-4"></div>
+  </div>
+
+  <div id="row">
+    <?php include_once( VIEW_COMMON_PATH . "footer.html"); ?>
+  </div>
+</div>
+</body>
+</html>

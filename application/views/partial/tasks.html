@@ -1,0 +1,37 @@
+          <h3>User Tasks</h3>
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th><a href="index.php?p=home&a=home&c=home&sortBy=<?=ORDER_BY_USER_NAME;?>&pageNum=<?=$this->pageNum;?>">User Name</a></th>
+                  <th><a href="index.php?p=home&a=home&c=home&sortBy=<?=ORDER_BY_EMAIL;?>&pageNum=<?=$this->pageNum;?>">Email</a></th>
+                  <th>Task Details</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach($this->tasks as $task): ?>
+                  <tr>
+                    <td><?php echo $task->userName; ?></td>
+                    <td><?php echo $task->email; ?></td>
+                    <td><?php echo $task->taskDetails; ?></td>
+                    <td><?php echo $task->status; ?></td>
+                    <td>
+                        <input type="button" class="btn btn-primary" value="View Task" onClick="document.location.href='index.php?p=task&a=viewTask&c=task&taskId=<?php echo $task->id; ?>'" />
+                        <input type="button" class="btn btn-primary"value="Modify Task" onClick="document.location.href='index.php?p=task&a=modifyTask&c=task&taskId=<?php echo $task->id; ?>'" style="display:<?php echo isset($_SESSION['isloggedIn']) ? 'inline' : 'none' ?>"/>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+              <tfoot>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td align="center"><a class="<?php echo $this->pageNum <=1 ? 'disabled' :''; ?>" href="index.php?p=home&a=taskPagination&c=home&dir=prev&pageNum=<?=$this->pageNum;?>">< Prev</a></td>
+                    <td align="center"><a class="<?php echo $totalPages > $this->pageNum ? '' :'disabled'; ?>" href="index.php?p=home&a=taskPagination&c=home&dir=next&pageNum=<?=$this->pageNum;?>">Next ></a></td>
+                  </tr>
+                </tfoot>
+            </table>
+          </div>
