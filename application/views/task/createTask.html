@@ -4,6 +4,79 @@
 <meta charset="UTF-8">
 <title>Task implementation App</title>
 <?php include_once( VIEW_COMMON_PATH . "common.html"); ?>
+<script>
+  $(function() {
+    $('#preview').click(function(e){
+      var userName = $('#formControlUserName').val();
+      $('.modal-body #formControlUserNameModal').val( userName );
+
+      var email = $('#formControlEmail').val();
+      $('.modal-body #formControlEmailModal').val( email );
+
+      var taskDetails = $('#formControlTaskDetails').val();
+      $('.modal-body #formControlTaskDetailsModal').val( taskDetails );
+
+      var taskImageName = $('#fileNameHidden').val();
+      $('.modal-body #taskImage').attr('src', 'uploads/' + taskImageName);
+      $('.modal-body #taskImageHidden').val(taskImageName);
+    });
+
+    $('#fileToUpload').on('change', function() {
+      var file = this.files[0];
+
+      // Check file upload type. Allow only images.
+      if (!file.name.match(/.(jpg|jpeg|png|gif)$/i)) {
+          alert('File upload is not an image file.');
+          return;
+      }
+
+      // check file upload size. Max 3 MB
+      var fileSize = file.size / 1024 / 1024; // max allow 3 MB
+      if (fileSize > 3) {
+          alert('Task image file max upload size is > 3 MB');
+          return;
+      }
+
+      $('#fileNameHidden').val(file.name);
+
+      // upload file over ajax, so we don't reload page.
+      $.ajax({
+        url: 'index.php?p=task&a=uploadTaskFile&c=task',
+        type: 'POST',
+        // Form data
+        data: new FormData($('form')[0]),
+        cache: false,
+        contentType: false,
+        processData: false,
+        // File upload progress
+        xhr: function() {
+            var myXhr = $.ajaxSettings.xhr();
+            if (myXhr.upload) {
+                // For handling the progress of the upload
+                myXhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                        $('progress').attr({
+                            value: e.loaded,
+                            max: e.total,
+                        });
+                    }
+                } , false);
+            }
+            return myXhr;
+        }
+      }).done(function( data ) {
+        var result = JSON.parse(data);
+        alert(result.message);
+
+        if(result.status === 'done'){
+          $('#preview').removeAttr("disabled");
+        } else {
+          $('#preview').attr( "disabled", "disabled" );
+        }
+      });
+    });
+  });
+</script>
 </head>
 <body>
   <div class="container">
@@ -14,29 +87,44 @@
   <div id="row">
     <div class="col-md-8">
 
-    <form action="index.php?p=task&a=saveTask&c=task" method="post">
+    <div>
       <h3>Create A New Task:</h3>
       <div class="form-group">
-        <label for="formControlInput1">User Name</label>
-        <input name="userName" type="text" class="form-control" id="formControlInput1" placeholder="Your Name">
+        <label for="formControlUserName">User Name</label>
+        <input name="userName" type="text" class="form-control" id="formControlUserName" placeholder="Your Name">
       </div>
 
       <div class="form-group">
-        <label for="formControlInput2">Email</label>
-        <input name="email" type="email" class="form-control" id="formControlInput2" placeholder="test@gmail.com">
+        <label for="formControlEmail">Email</label>
+        <input name="email" type="email" class="form-control" id="formControlEmail" placeholder="test@gmail.com">
       </div>
 
       <div class="form-group">
-        <label for="formControlInput3">Task Details</label>
-        <textarea name="task-details" class="form-control" rows="5" cols="40" id="formControlInput3" placeholder="Task Details"></textarea>
+        <label for="formControlTaskDetails">Task Details</label>
+        <textarea name="task-details" class="form-control" rows="5" cols="40" id="formControlTaskDetails" placeholder="Task Details"></textarea>
       </div>
+
+      <form enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="fileToUpload">Task File To Upload:</label>
+          <input name="fileToUpload" type="file" class="form-control-file" id="fileToUpload">
+        </div>
+      </form>
+      <input type="hidden" id="fileNameHidden" value=""/>
+      <progress></progress>
+
       <div id="row">
         <input type="button" class="btn btn-primary" value="Cancel" onClick="document.location.href='index.php?p=home&a=home&c=home'" />
-        <button type="submit" class="btn btn-primary mb-2" style="margin-top:7px;">Save Task</button>
+        <button id="preview" type="button" class="btn btn-primary mb-2" style="margin-top:7px;" data-toggle="modal" data-target="#exampleModal" disabled>Preview Task</button>
       </div>
+    </div>
 
     </div>
     <div class="col-md-4"></div>
+  </div>
+
+  <div class="row">
+    <?php include_once( VIEW_PARTIAL_PATH . "previewTaskModal.html"); ?>
   </div>
 
   <div id="row">

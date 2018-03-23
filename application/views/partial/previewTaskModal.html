@@ -1,0 +1,42 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create A New Task Preview:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="index.php?p=task&a=saveTask&c=task" method="post">
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="formControlUserNameModal">User Name</label>
+              <input name="userName" readonly type="text" class="form-control" id="formControlUserNameModal" placeholder="Your Name">
+            </div>
+
+            <div class="form-group">
+              <label for="formControlEmailModal">Email</label>
+              <input name="email" readonly type="email" class="form-control" id="formControlEmailModal" placeholder="test@gmail.com">
+            </div>
+
+            <div class="form-group">
+              <label for="formControlTaskDetailsModal">Task Details</label>
+              <textarea name="task-details" readonly class="form-control" rows="5" cols="40" id="formControlTaskDetailsModal" placeholder="Task Details"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="formControlImageModal">Task Image</label>
+              <img id="taskImage" src=""/>
+              <input id="taskImageHidden" type="hidden" name="task-image" value=""/>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary mb-2" style="margin-top:7px;">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
